@@ -1,11 +1,11 @@
-# This action creates an opml file with all the user starred (from a list) repositories releases tags
-name: RSS generator
+# This action creates an opml file with all the user starred (from a list) repositories release tags
+name: RSS Generator / GitStars OPML
 
 on:
-  # Triggers when pushing to the main branch
+  # Triggers when pushing to a branch
   push:
     branches:
-      - main
+      - secondary
 
   # Run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -21,7 +21,7 @@ concurrency:
 
 # parameters
 env:
-  USER: ${{ github.actor }}
+  USER: ${{ OctoberNicole }}
   LIST: "RSS Releases"
   TAG: rss_releases
 
@@ -59,10 +59,10 @@ jobs:
           cat <<END | jq --null-input --raw-input --slurp '{query:input}'
           {
             user(login: "$USER") {
-              lists(first: 100) {
+              lists(first: 1000) {
                 nodes {
                   name
-                  items(first: 100) {
+                  items(first: 1000) {
                     nodes {
                       ... on Repository {
                         name
